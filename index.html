@@ -12,6 +12,7 @@
             height: 100vh;
             margin: 0;
             font-family: Arial, sans-serif;
+            background-color: #000;
         }
         #popup {
             background-color: #f0f0f0;
@@ -19,23 +20,70 @@
             border: 1px solid #ccc;
             text-align: center;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 10;
         }
         #popup button {
             margin-top: 20px;
             padding: 10px 20px;
             font-size: 16px;
         }
+        #fireworks-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 5;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
     <div id="popup">
         <p>Igor je bolji od Alexa</p>
-        <button onclick="closePopup()">Alex se slaže s tim</button>
+        <button onclick="showFireworks()">Alex se slaže s tim</button>
     </div>
+    <div id="fireworks-container"></div>
 
+    <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.9.2/dist/fireworks.js"></script>
     <script>
-        function closePopup() {
+        function showFireworks() {
             document.getElementById('popup').style.display = 'none';
+            const container = document.getElementById('fireworks-container');
+            const fireworks = new Fireworks(container, {
+                autoresize: true,
+                opacity: 0.9,
+                acceleration: 1.05,
+                friction: 0.97,
+                gravity: 1.5,
+                particles: 50,
+                traceLength: 3,
+                traceSpeed: 10,
+                explosion: 6,
+                intensity: 30,
+                flickering: 50,
+                lineWidth: {
+                    trace: 2,
+                    explosion: 4
+                },
+                hue: {
+                    min: 0,
+                    max: 360
+                },
+                delay: {
+                    min: 15,
+                    max: 30
+                },
+                rocketsPoint: {
+                    min: 50,
+                    max: 50
+                },
+                lineStyle: 'round',
+                lineCap: 'round'
+            });
+
+            fireworks.start();
+            setTimeout(() => fireworks.stop(), 5000);
         }
 
         window.onbeforeunload = function() {
